@@ -40,8 +40,8 @@
 ### Installation:
 1. Clone this repository or download the source code:
    ```bash
-   git clone https://github.com/LeoSeeker526/Star-Attack.git
-   cd star-attack
+   git clone https://github.com/Godsbleedop/Star-Attack.git
+   cd Star-Attack
    ```
 2. Install Pygame:
    ```bash
@@ -54,8 +54,9 @@
    ```
 
 ## Credits
-- Developed by Adrian D Silva
+- Developed by Adrian D Silva and Aaron Quadras
 - **Email**: adriansdsilva@gmail.com
+- **Email**: aaronquadars2004@gmail.com
 - **GitHub**: [LeoSeeker526](https://github.com/LeoSeeker526)
 
 

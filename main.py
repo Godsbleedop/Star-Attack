@@ -58,7 +58,9 @@ def draw_hexagon(surface, color, center, size):
         y = center[1] + size * math.sin(angle)
         points.append((int(x), int(y)))
     pygame.draw.polygon(surface, color, points)
+    
 
+        
 class MegaBaddie(pygame.Rect):
     def __init__(self, x, y):
         super().__init__(x, y, MEGA_BADDIE_WIDTH, MEGA_BADDIE_HEIGHT)
@@ -151,9 +153,11 @@ def start_screen():
     WIN.fill("black")
     title_text = TITLE_FONT.render("Star Attack", 1, "white")
     proceed_text = FONT.render("Press any key to continue", 1, "white")
+    proceed_text_1=TITLE_FONT.render("working phase no idea if it works",1,"blue")
 
     WIN.blit(title_text, (WIDTH // 2 - title_text.get_width() // 2, HEIGHT // 2 - 100))
     WIN.blit(proceed_text, (WIDTH // 2 - proceed_text.get_width() // 2, HEIGHT // 2 + 50))
+    WIN.blit(proceed_text_1, (WIDTH // 2 - proceed_text_1.get_width() // 2, HEIGHT // 2 - 50))
     pygame.display.update()
 
     while True:
@@ -163,6 +167,7 @@ def start_screen():
                 exit()
             if event.type == pygame.KEYDOWN:
                 return
+                
 
 def instructions_screen():
     WIN.fill("black")
@@ -219,7 +224,60 @@ def game_over_screen(elapsed_time, score):
             pygame.quit()
             exit()
 
+def main_menu():
+    # 1. Create the 'boxes' (Rects) for our buttons
+    # pygame.Rect(x, y, width, height)
+    start_button = pygame.Rect(WIDTH//2 - 100, 350, 200, 50)
+    exit_button = pygame.Rect(WIDTH//2 - 100, 450, 200, 50)
+
+    while True:
+        WIN.fill("black")
+        
+        # 2. Get the current mouse position (x, y)
+        mouse_pos = pygame.mouse.get_pos()
+
+        # 3. Draw the Title
+        title = TITLE_FONT.render("STAR ATTACK", 1, "white")
+        WIN.blit(title, (WIDTH//2 - title.get_width()//2, 150))
+
+        # 4. Handle "Hover" effect (Change color if mouse is over button)
+        start_color = "green" if start_button.collidepoint(mouse_pos) else "white"
+        exit_color = "red" if exit_button.collidepoint(mouse_pos) else "white"
+
+        # 5. Draw the button rectangles
+        pygame.draw.rect(WIN, start_color, start_button, 2) # 2 is border thickness
+        pygame.draw.rect(WIN, exit_color, exit_button, 2)
+
+        # 6. Draw the text inside the buttons
+        start_text = FONT.render("START", 1, start_color)
+        exit_text = FONT.render("EXIT", 1, exit_color)
+        
+        # Center the text inside the button Rects
+        WIN.blit(start_text, (start_button.x + (start_button.width//2 - start_text.get_width()//2), 
+                              start_button.y + 10))
+        WIN.blit(exit_text, (exit_button.x + (exit_button.width//2 - exit_text.get_width()//2), 
+                             exit_button.y + 10))
+
+        pygame.display.update()
+
+        # 7. Listen for the CLICK
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                exit()
+            
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if event.button == 1: # 1 is the Left Mouse Button
+                    if start_button.collidepoint(mouse_pos):
+                        return # Start the game!
+                    if exit_button.collidepoint(mouse_pos):
+                        pygame.quit()
+                        exit()
 def main():
+    main_menu()  # <--- Add this! It will hold the game here until 'Start' is clicked.
+    instructions_screen() # Then it shows instructions
+    
+    run = True
     start_screen()
     instructions_screen()
 
